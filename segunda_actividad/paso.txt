@@ -31,8 +31,10 @@ minikube service argocd-server -n argocd --url
 #validar los pods 
 kubectl -n argocd get svc
 
-
-
+kubectl apply -n argocd -f .\service.yaml 
+kubectl apply -n argocd -f .\deployment.yaml
+minikube service frontend-challenge-service -n argocd       
+kubectl get svc frontend-challenge-service -n argocd
 ## dockerizar project 
 
 crear Dockerfile con su configuracion

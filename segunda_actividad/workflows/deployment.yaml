@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-challenge
+  labels:
+    app: frontend-challenge
+    namespace: argocd  # Se asegura de que el Deployment esté en el namespace 'argocd'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-challenge
+      
+  template:
+    metadata:
+      labels:
+        app: frontend-challenge
+    spec:
+      containers:
+        - name: frontend-challenge
+          image: orangearmandi/frontend-challenge-base:latest
+          ports:
+            - containerPort: 3000
