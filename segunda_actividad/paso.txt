@@ -1,0 +1,51 @@
+Download and run the installer for the latest release.
+Or if using PowerShell, use this command:
+
+New-Item -Path 'c:\' -Name 'minikube' -ItemType Directory -Force
+Invoke-WebRequest -OutFile 'c:\minikube\minikube.exe' -Uri 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe' -UseBasicParsing
+
+Add the minikube.exe binary to your PATH.
+Make sure to run PowerShell as Administrator.
+
+$oldPath = [Environment]::GetEnvironmentVariable('Path', [EnvironmentVariableTarget]::Machine)
+if ($oldPath.Split(';') -inotcontains 'C:\minikube'){
+  [Environment]::SetEnvironmentVariable('Path', $('{0};C:\minikube' -f $oldPath), [EnvironmentVariableTarget]::Machine)
+}
+
+
+kubectl create namespace argocd
+
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+kubectl -n argocd get pods
+
+kubectl -n argocd patch svc argocd-server --patch-file argocd-server-patch.yaml
+
+-arrnca una URL pública para acceder al servicio
+
+minikube service argocd-server -n argocd --url
+
+## genera la contraseña del administrador a base64
+[System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String((kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}")))
+
+#validar los pods 
+kubectl -n argocd get svc
+
+
+
+## dockerizar project 
+
+crear Dockerfile con su configuracion
+craer su .dockerignore
+
+#construir el docker
+docker build -t frontend-challenge-base:latest .
+
+#agregarle un etiqueta antes de subirlo
+docker tag frontend-challenge-base:latest orangearmandi/frontend-challenge-base:latest
+#pushearlo al git
+docker push orangearmandi/frontend-challenge-base:latest        
+
+
+
+

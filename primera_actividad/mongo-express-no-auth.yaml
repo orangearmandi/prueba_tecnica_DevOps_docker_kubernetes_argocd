@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express
+  labels:
+    app: mongo-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+    spec:
+      containers:
+      - name: mongo-express
+        image: mongo-express:latest
+        ports:
+        - containerPort: 8081
+        env:
+        - name: ME_CONFIG_MONGODB_SERVER
+          value: "mongo-replica-set-0.mongo,mongo-replica-set-1.mongo,mongo-replica-set-2.mongo" # Lista de hosts
+        - name: ME_CONFIG_MONGODB_PORT
+          value: "27017"
+        - name: ME_CONFIG_MONGODB_REPLSET
+          value: "rs0" # Nombre del replica set
+        - name: ME_CONFIG_BASICAUTH_USERNAME
+          value: "admin" # Usuario para autenticación básica (Mongo-Express)
+        - name: ME_CONFIG_BASICAUTH_PASSWORD
+          value: "admin123" # Contraseña para autenticación básica (Mongo-Express)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-express
+spec:
+  type: NodePort
+  ports:
+  - port: 8081
+    targetPort: 8081
+    nodePort: 30001 # Puerto externo para acceder
+  selector:
+    app: mongo-express
