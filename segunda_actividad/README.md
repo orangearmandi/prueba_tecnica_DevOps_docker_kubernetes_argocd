@@ -20,6 +20,9 @@ if ($oldPath.Split(';') -inotcontains 'C:\minikube'){
   [Environment]::SetEnvironmentVariable('Path', $('{0};C:\minikube' -f $oldPath), [EnvironmentVariableTarget]::Machine)
 }
 ```
+### ARRANCAR MINIKUBE
+
+minikube start
 
 ## Configurar ArgoCD
 
@@ -37,8 +40,8 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 ```bash
 kubectl -n argocd get pods
 ```
-
-### Actualizar el Servicio `argocd-server`
+### ASGINAR UN PUERTO PREDETERMINADO 
+### Actualizar el Servicio `argocd-server` 
 ```bash
 kubectl -n argocd patch svc argocd-server --patch-file argocd-server-patch.yaml
 ```
@@ -58,8 +61,10 @@ minikube service argocd-server -n argocd --url
 kubectl -n argocd get svc
 ```
 
-### Aplicar configuración personalizada
+
+### Aplicar configuración personalizada desde la carpetaa workflows locamente
 ```bash
+docker pull orangearmandi/frontend-challenge-base:latest
 kubectl apply -n argocd -f .\service.yaml
 kubectl apply -n argocd -f .\deployment.yaml
 ```
