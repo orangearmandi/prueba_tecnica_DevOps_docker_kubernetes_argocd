@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  app:
+    image: nginx:1.23  # Especificar una versión estable
+    ports:
+      - "8080:80"
+    environment:
+      NODE_ENV: "production"
+    depends_on:
+      - database
+    networks:
+      - app_network
+
+  database:
+    image: postgres:15-alpine  # Usar una versión estable
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}  # Uso de variables de entorno
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password123}
+      POSTGRES_DB: ${POSTGRES_DB:-my_database}
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "admin"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
+
+  redis:
+    image: redis:7-alpine  # Especificar versión estable
+    command: redis-server --requirepass "${REDIS_PASSWORD:-redispass123}"
+    ports:
+      - "6379:6379"
+    networks:
+      - app_network
+
+volumes:
+  pg_data:
+
+networks:
+  app_network:
+    driver: bridge
