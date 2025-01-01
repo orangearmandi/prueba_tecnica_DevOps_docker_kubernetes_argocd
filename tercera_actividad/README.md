@@ -4,6 +4,8 @@ Este repositorio contiene un archivo `docker-compose.yml` que define una aplicac
 
 ## Servicios
 
+Correciones que se mejoraron y se implementaron
+
 ### 1. Servicio de Aplicación (`app`)
 - **Imagen**: `nginx:latest`
 - **Puertos**: Mapea el puerto `8080` en el host al puerto `80` en el contenedor.
