@@ -1,6 +1,6 @@
 ## DIAGRAMA
 
-![Diagrama de la actividad](prueba_tecnica_DevOps_docker_kubernetes_argocd/raw/main/primera_actividad/diagrama/Diapositiva2.JPG)
+![Diagrama de la actividad](diagrama/Diapositiva1.JPG)
 
 # DOCKER_KUBERNETES_MONGO_ALTADISPONIBILIDAD_GRAFENA_PROMETEUS
 
