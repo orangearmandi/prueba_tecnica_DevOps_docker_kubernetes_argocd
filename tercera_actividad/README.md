@@ -1,6 +1,6 @@
-# Configuración Multi-Servicio con Docker Compose
+## DOCKER COMPOSER TERCERA ACTIVIDAD
 
-Este repositorio contiene un archivo `docker-compose.yml` que define una aplicación multi-servicio simple y bien estructurada. A continuación, se presenta una descripción general de la configuración y los detalles.
+Este repositorio contiene un archivo `docker-compose.yml` que define una aplicación postgres y que se puede implementar desde docker .
 
 ## Servicios
 
